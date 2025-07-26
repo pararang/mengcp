@@ -15,25 +15,25 @@ type ToolDefinition struct {
 	Function    func(input json.RawMessage) (string, error)
 }
 
-type Agent struct {
+type ClaudeAgent struct {
 	client         *anthropic.Client
 	getUserMessage func() (string, bool)
 	tools          []ToolDefinition
 }
 
-func NewAgent(client *anthropic.Client, getUserMessage func() (string, bool)) *Agent {
-	return &Agent{
+func NewClaudeAgent(client *anthropic.Client, getUserMessage func() (string, bool)) *ClaudeAgent {
+	return &ClaudeAgent{
 		client:         client,
 		getUserMessage: getUserMessage,
 	}
 }
 
-func (a *Agent) RegisterTool(tool ToolDefinition) {
+func (ca *ClaudeAgent) RegisterTool(tool ToolDefinition) {
 	fmt.Println("registering tool: ", tool.Name)
-	a.tools = append(a.tools, tool)
+	ca.tools = append(ca.tools, tool)
 }
 
-func (a *Agent) Run(ctx context.Context) error {
+func (ca *ClaudeAgent) Run(ctx context.Context) error {
 	conversation := []anthropic.MessageParam{}
 
 	fmt.Println("Chat with Claude (use 'ctrl-c' to quit)")
@@ -42,7 +42,7 @@ func (a *Agent) Run(ctx context.Context) error {
 	for {
 		if readUserInput {
 			fmt.Print("\u001b[94mYou\u001b[0m: ")
-			userInput, ok := a.getUserMessage()
+			userInput, ok := ca.getUserMessage()
 			if !ok {
 				break
 			}
@@ -51,7 +51,7 @@ func (a *Agent) Run(ctx context.Context) error {
 			conversation = append(conversation, userMessage)
 		}
 
-		message, err := a.runInference(ctx, conversation)
+		message, err := ca.runInference(ctx, conversation)
 		if err != nil {
 			return err
 		}
@@ -63,7 +63,7 @@ func (a *Agent) Run(ctx context.Context) error {
 			case "text":
 				fmt.Printf("\u001b[93mClaude\u001b[0m: %s\n", content.Text)
 			case "tool_use":
-				result := a.executeTool(content.ID, content.Name, content.Input)
+				result := ca.executeTool(content.ID, content.Name, content.Input)
 				toolResults = append(toolResults, result)
 			}
 		}
@@ -78,9 +78,9 @@ func (a *Agent) Run(ctx context.Context) error {
 	return nil
 }
 
-func (a *Agent) runInference(ctx context.Context, conversation []anthropic.MessageParam) (*anthropic.Message, error) {
+func (ca *ClaudeAgent) runInference(ctx context.Context, conversation []anthropic.MessageParam) (*anthropic.Message, error) {
 	anthropicTools := []anthropic.ToolUnionParam{}
-	for _, tool := range a.tools {
+	for _, tool := range ca.tools {
 		anthropicTools = append(anthropicTools, anthropic.ToolUnionParam{
 			OfTool: &anthropic.ToolParam{
 				Name:        tool.Name,
@@ -90,7 +90,7 @@ func (a *Agent) runInference(ctx context.Context, conversation []anthropic.Messa
 		})
 	}
 
-	message, err := a.client.Messages.New(ctx, anthropic.MessageNewParams{
+	message, err := ca.client.Messages.New(ctx, anthropic.MessageNewParams{
 		Model:     anthropic.ModelClaude3_7SonnetLatest,
 		MaxTokens: int64(1024),
 		Messages:  conversation,
@@ -99,10 +99,10 @@ func (a *Agent) runInference(ctx context.Context, conversation []anthropic.Messa
 	return message, err
 }
 
-func (a *Agent) executeTool(id, name string, input json.RawMessage) anthropic.ContentBlockParamUnion {
+func (ca *ClaudeAgent) executeTool(id, name string, input json.RawMessage) anthropic.ContentBlockParamUnion {
 	var toolDef ToolDefinition
 	var found bool
-	for _, tool := range a.tools {
+	for _, tool := range ca.tools {
 		if tool.Name == name {
 			toolDef = tool
 			found = true

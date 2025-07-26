@@ -22,11 +22,11 @@ func main() {
 		return scanner.Text(), true
 	}
 
-	mcp := apis.NewAgent(&client, getUserMessage)
+	claude := apis.NewClaudeAgent(&client, getUserMessage)
 
-	mcp.RegisterTool(tools.ReadFileDefinition)
+	claude.RegisterTool(tools.ReadFileDefinition)
 
-	err := mcp.Run(context.TODO())
+	err := claude.Run(context.TODO())
 	if err != nil {
 		fmt.Printf("Error: %s\n", err.Error())
 	}
