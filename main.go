@@ -7,7 +7,7 @@ import (
 	"os"
 
 	"github.com/anthropics/anthropic-sdk-go"
-	"github.com/pararang/code-editing-agent/agent"
+	"github.com/pararang/code-editing-agent/apis"
 )
 
 func main() {
@@ -21,8 +21,13 @@ func main() {
 		return scanner.Text(), true
 	}
 
-	agent := agent.NewAgent(&client, getUserMessage)
-	err := agent.Run(context.TODO())
+	mcp := apis.NewAgent(&client, getUserMessage)
+
+
+	mcp.RegisterTool(apis.ToolDefinition{}) //TODO: Register actual tools here
+
+
+	err := mcp.Run(context.TODO())
 	if err != nil {
 		fmt.Printf("Error: %s\n", err.Error())
 	}
