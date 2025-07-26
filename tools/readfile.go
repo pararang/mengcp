@@ -24,7 +24,7 @@ func ReadFile(input json.RawMessage) (string, error) {
 	readFileInput := ReadFileInput{}
 	err := json.Unmarshal(input, &readFileInput)
 	if err != nil {
-		panic(err)
+		return "", err
 	}
 
 	content, err := os.ReadFile(readFileInput.Path)

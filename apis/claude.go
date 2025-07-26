@@ -31,6 +31,12 @@ func NewClaudeAgent(client *anthropic.Client, getUserMessage func() (string, boo
 	}
 }
 
+func (ca *ClaudeAgent) RegisterTools(tools ...ToolDefinition) {
+	for _, tool := range tools {
+		ca.RegisterTool(tool)
+	}
+}
+
 func (ca *ClaudeAgent) RegisterTool(tool ToolDefinition) {
 	ca.addToolDefinition(tool)
 	ca.addToolUnionParam(anthropic.ToolUnionParam{

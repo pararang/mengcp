@@ -24,7 +24,10 @@ func main() {
 
 	claude := apis.NewClaudeAgent(&client, getUserMessage)
 
-	claude.RegisterTool(tools.ReadFileDefinition)
+	claude.RegisterTools(
+		tools.ReadFileDefinition, 
+		tools.ListFilesDefinition,
+	)
 
 	err := claude.Run(context.TODO())
 	if err != nil {
