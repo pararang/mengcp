@@ -10,6 +10,7 @@ import (
 type Agent struct {
 	client         *anthropic.Client
 	getUserMessage func() (string, bool)
+	tools          []ToolDefinition
 }
 
 func NewAgent(client *anthropic.Client, getUserMessage func() (string, bool)) *Agent {
@@ -17,6 +18,10 @@ func NewAgent(client *anthropic.Client, getUserMessage func() (string, bool)) *A
 		client:         client,
 		getUserMessage: getUserMessage,
 	}
+}
+
+func (a *Agent) RegisterTool(tool ToolDefinition) {
+	a.tools = append(a.tools, tool)
 }
 
 func (a *Agent) Run(ctx context.Context) error {
