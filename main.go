@@ -27,6 +27,7 @@ func main() {
 	claude.RegisterTools(
 		tools.ReadFileDefinition, 
 		tools.ListFilesDefinition,
+		tools.EditFileDefinition,
 	)
 
 	err := claude.Run(context.TODO())
@@ -34,3 +35,4 @@ func main() {
 		fmt.Printf("Error: %s\n", err.Error())
 	}
 }
+
