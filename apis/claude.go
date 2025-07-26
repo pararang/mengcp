@@ -16,21 +16,42 @@ type ToolDefinition struct {
 }
 
 type ClaudeAgent struct {
-	client         *anthropic.Client
-	getUserMessage func() (string, bool)
-	tools          []ToolDefinition
+	client          *anthropic.Client
+	getUserMessage  func() (string, bool)
+	toolsDefinition map[string]ToolDefinition
+	toolsUnionParam []anthropic.ToolUnionParam
 }
 
 func NewClaudeAgent(client *anthropic.Client, getUserMessage func() (string, bool)) *ClaudeAgent {
 	return &ClaudeAgent{
-		client:         client,
-		getUserMessage: getUserMessage,
+		client:          client,
+		getUserMessage:  getUserMessage,
+		toolsDefinition: make(map[string]ToolDefinition, 0),
+		toolsUnionParam: []anthropic.ToolUnionParam{},
 	}
 }
 
 func (ca *ClaudeAgent) RegisterTool(tool ToolDefinition) {
-	fmt.Println("registering tool: ", tool.Name)
-	ca.tools = append(ca.tools, tool)
+	ca.addToolDefinition(tool)
+	ca.addToolUnionParam(anthropic.ToolUnionParam{
+			OfTool: &anthropic.ToolParam{
+				Name:        tool.Name,
+				Description: anthropic.String(tool.Description),
+				InputSchema: tool.InputSchema,
+			},
+		})
+}
+
+func (ca *ClaudeAgent) addToolDefinition(def ToolDefinition) {
+	if _, exists := ca.toolsDefinition[def.Name]; exists {
+		fmt.Printf("Warning: Tool %s is already registered, overwriting.\n", def.Name)
+	}
+
+	ca.toolsDefinition[def.Name] = def
+}
+
+func (ca *ClaudeAgent) addToolUnionParam(param anthropic.ToolUnionParam) {
+	ca.toolsUnionParam = append(ca.toolsUnionParam, param)
 }
 
 func (ca *ClaudeAgent) Run(ctx context.Context) error {
@@ -79,38 +100,20 @@ func (ca *ClaudeAgent) Run(ctx context.Context) error {
 }
 
 func (ca *ClaudeAgent) runInference(ctx context.Context, conversation []anthropic.MessageParam) (*anthropic.Message, error) {
-	anthropicTools := []anthropic.ToolUnionParam{}
-	for _, tool := range ca.tools {
-		anthropicTools = append(anthropicTools, anthropic.ToolUnionParam{
-			OfTool: &anthropic.ToolParam{
-				Name:        tool.Name,
-				Description: anthropic.String(tool.Description),
-				InputSchema: tool.InputSchema,
-			},
-		})
-	}
-
 	message, err := ca.client.Messages.New(ctx, anthropic.MessageNewParams{
 		Model:     anthropic.ModelClaude3_7SonnetLatest,
 		MaxTokens: int64(1024),
 		Messages:  conversation,
-		Tools:     anthropicTools,
+		Tools:     ca.toolsUnionParam,
 	})
+
 	return message, err
 }
 
 func (ca *ClaudeAgent) executeTool(id, name string, input json.RawMessage) anthropic.ContentBlockParamUnion {
-	var toolDef ToolDefinition
-	var found bool
-	for _, tool := range ca.tools {
-		if tool.Name == name {
-			toolDef = tool
-			found = true
-			break
-		}
-	}
-	if !found {
-		return anthropic.NewToolResultBlock(id, "tool not found", true)
+	toolDef, exist := ca.toolsDefinition[name]; 
+	if !exist {
+		return anthropic.NewToolResultBlock(id, fmt.Sprintf("tool %s not found", name), true)
 	}
 
 	fmt.Printf("\u001b[92mtool\u001b[0m: %s(%s)\n", name, input)
