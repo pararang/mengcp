@@ -10,18 +10,30 @@ import (
 	"github.com/pararang/code-editing-agent/apis"
 )
 
-var ListFilesDefinition = apis.ToolDefinition{
-	Name:        "list_files",
-	Description: "List files and directories at a given path. If no path is provided, lists files in the current directory.",
-	InputSchema: ListFilesInputSchema,
-	Function:    ListFiles,
-}
-
 type ListFilesInput struct {
 	Path string `json:"path,omitempty" jsonschema_description:"Optional relative path to list files from. Defaults to current directory if not provided."`
 }
 
-var ListFilesInputSchema = GenerateSchema[ListFilesInput]()
+var ListFilesDefinition = apis.ToolDefinition{
+	Name:        "list_files",
+	Description: "List files and directories at a given path. If no path is provided, lists files in the current directory.",
+	InputSchema: GenerateSchema[ListFilesInput](),
+	Function:    ListFiles,
+}
+
+func skipDirectory(dir string) bool {
+	var skipDirs = map[string]bool{
+		".git": true, 
+		"node_modules": true, 
+		"vendor": true,
+	}
+
+	if _, ok := skipDirs[dir]; ok {
+		return true
+	}
+
+	return false
+}
 
 func ListFiles(input json.RawMessage) (string, error) {
 	var listFilesInput ListFilesInput
@@ -60,6 +72,13 @@ func ListFiles(input json.RawMessage) (string, error) {
 		relPath, err := filepath.Rel(dir, path)
 		if err != nil {
 			return err
+		}
+
+		if skipDirectory(relPath) {
+			if d.IsDir() {
+				return filepath.SkipDir // Skip traversing into this directory
+			}
+			return nil // Skip this file
 		}
 
 		fmt.Println("Found file:", relPath)
