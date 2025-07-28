@@ -7,7 +7,7 @@ import (
 	"os"
 
 	"github.com/anthropics/anthropic-sdk-go"
-	"github.com/pararang/code-editing-agent/apis"
+	"github.com/pararang/code-editing-agent/claude"
 	"github.com/pararang/code-editing-agent/tools"
 )
 
@@ -22,7 +22,7 @@ func main() {
 		return scanner.Text(), true
 	}
 
-	claude := apis.NewClaudeAgent(&client, getUserMessage)
+	claude := claude.NewClaudeAgent(&client, getUserMessage)
 
 	claude.RegisterTools(
 		tools.ReadFileDefinition, 

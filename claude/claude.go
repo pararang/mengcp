@@ -1,4 +1,4 @@
-package apis
+package claude
 
 import (
 	"context"

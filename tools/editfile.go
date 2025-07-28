@@ -7,7 +7,7 @@ import (
 	"path"
 	"strings"
 
-	"github.com/pararang/code-editing-agent/apis"
+	"github.com/pararang/code-editing-agent/claude"
 )
 
 type EditFileInput struct {
@@ -16,7 +16,7 @@ type EditFileInput struct {
 	NewStr string `json:"new_str" jsonschema_description:"Text to replace old_str with"`
 }
 
-var EditFileDefinition = apis.ToolDefinition{
+var EditFileDefinition = claude.ToolDefinition{
 	Name: "edit_file",
 	Description: `Make edits to a text file.
 Replaces 'old_str' with 'new_str' in the given file. 'old_str' and 'new_str' MUST be different from each other.

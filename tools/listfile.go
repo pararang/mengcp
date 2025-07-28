@@ -7,14 +7,14 @@ import (
 	"os"
 	"path/filepath"
 
-	"github.com/pararang/code-editing-agent/apis"
+	"github.com/pararang/code-editing-agent/claude"
 )
 
 type ListFilesInput struct {
 	Path string `json:"path,omitempty" jsonschema_description:"Optional relative path to list files from. Defaults to current directory if not provided."`
 }
 
-var ListFilesDefinition = apis.ToolDefinition{
+var ListFilesDefinition = claude.ToolDefinition{
 	Name:        "list_files",
 	Description: "List files and directories at a given path. If no path is provided, lists files in the current directory.",
 	InputSchema: GenerateSchema[ListFilesInput](),
