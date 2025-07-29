@@ -30,6 +30,7 @@ func main() {
 		tools.ListFilesDefinition,
 		tools.EditFileDefinition,
 		pokeTools.GetDetailDefinition,
+		pokeTools.GetAbilityDetailDefinition,
 	)
 
 	err := claude.Run(context.TODO())
