@@ -1,8 +1,13 @@
-# Code Editing Agent
+# MCP Agent 008
+Random tools while learning about MCP (Model Context Protocol) and building agents for AI.
 
-This repository contains a simple code editing agent using Claude (currently). It's based on the tutorial from [AmpCode](https://ampcode.com/how-to-build-an-agent) with slight modifications to the code structure and file organization for improved tidiness and performance.
+## Code Editing Agent
+Contains a simple tools for code editing by AI agent using Claude (currently). It's based on the tutorial from [AmpCode](https://ampcode.com/how-to-build-an-agent) with slight modifications to the code structure and file organization for improved tidiness and performance.
 
 - More modular codes with organized file structure
 - Performance optimizations in the code with map and in-memory cache for the definition setting
 
 Feel free to explore and modify the code for your own purposes!
+
+## Poke Agent
+Inspired from [allenthomas](https://allenthomas.vercel.app/posts/mcp) technical walkthrough to explain what and how MCP working in simple terms.
