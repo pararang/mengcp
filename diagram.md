@@ -12,6 +12,7 @@ graph TD
     D --> F[Read File Tool]
     D --> G[List Files Tool]
     D --> H[Edit File Tool]
+    H --> H1{Existing File?}
     
     E --> I[Get Pokemon Details]
     E --> J[Get Ability Details]
@@ -21,7 +22,8 @@ graph TD
     
     F -->|File Content| L[File System]
     G -->|File List| L
-    H -->|Modified Content| L
+    H1 -->|Yes| H2[Modified Content] --> L
+    H1 -->|No| H3[Create New File] --> L
     
     K -->|Pokemon Data| M[JSON Response]
     M -->|Parsed Data| B
