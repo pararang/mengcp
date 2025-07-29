@@ -4,8 +4,8 @@ import (
 	"encoding/json"
 	"errors"
 
-	"github.com/pararang/code-editing-agent/apis"
-	"github.com/pararang/code-editing-agent/claude"
+	"github.com/pararang/emcp/apis"
+	"github.com/pararang/emcp/claude"
 )
 
 type GetAbilityDetailInput struct {

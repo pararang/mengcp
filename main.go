@@ -7,9 +7,9 @@ import (
 	"os"
 
 	"github.com/anthropics/anthropic-sdk-go"
-	"github.com/pararang/code-editing-agent/claude"
-	"github.com/pararang/code-editing-agent/tools"
-	pokeTools "github.com/pararang/code-editing-agent/tools/pokemon"
+	"github.com/pararang/emcp/claude"
+	"github.com/pararang/emcp/tools"
+	pokeTools "github.com/pararang/emcp/tools/pokemon"
 )
 
 func main() {

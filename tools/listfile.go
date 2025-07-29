@@ -7,7 +7,7 @@ import (
 	"os"
 	"path/filepath"
 
-	"github.com/pararang/code-editing-agent/claude"
+	"github.com/pararang/emcp/claude"
 )
 
 type ListFilesInput struct {

@@ -4,7 +4,7 @@ import (
 	"encoding/json"
 	"os"
 
-	"github.com/pararang/code-editing-agent/claude"
+	"github.com/pararang/emcp/claude"
 )
 
 type ReadFileInput struct {

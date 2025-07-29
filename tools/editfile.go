@@ -7,7 +7,7 @@ import (
 	"path"
 	"strings"
 
-	"github.com/pararang/code-editing-agent/claude"
+	"github.com/pararang/emcp/claude"
 )
 
 type EditFileInput struct {

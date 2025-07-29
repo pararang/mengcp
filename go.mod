@@ -1,4 +1,4 @@
-module github.com/pararang/code-editing-agent
+module github.com/pararang/emcp
 
 go 1.23.0
 
