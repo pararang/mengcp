@@ -1,6 +1,4 @@
-# Diagram
-
-# Flow Claude Agent Interaction
+## Flow Claude Agent Interaction
 ```mermaid
 graph TD
     A[User] -->|Input/Commands| B[Claude Agent]
