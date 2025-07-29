@@ -6,6 +6,7 @@ require (
 	github.com/anthropics/anthropic-sdk-go v1.6.2
 	github.com/invopop/jsonschema v0.13.0
 	github.com/stretchr/testify v1.8.4
+	golang.org/x/text v0.16.0
 )
 
 require (

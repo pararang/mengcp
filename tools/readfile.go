@@ -14,7 +14,7 @@ type ReadFileInput struct {
 var ReadFileDefinition = claude.ToolDefinition{
 	Name:        "read_file",
 	Description: "Read the contents of a given relative file path. Use this when you want to see what's inside a file. Do not use this with directory names.",
-	InputSchema: GenerateSchema[ReadFileInput](),
+	InputSchema: claude.GenerateSchema[ReadFileInput](),
 	Function:    ReadFile,
 }
 

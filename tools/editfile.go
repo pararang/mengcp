@@ -22,7 +22,7 @@ var EditFileDefinition = claude.ToolDefinition{
 Replaces 'old_str' with 'new_str' in the given file. 'old_str' and 'new_str' MUST be different from each other.
 If the file specified with path doesn't exist, it will be created.
 `,
-	InputSchema: GenerateSchema[EditFileInput](),
+	InputSchema: claude.GenerateSchema[EditFileInput](),
 	Function:    EditFile,
 }
 
