@@ -13,6 +13,7 @@ Feel free to explore and modify the code for your own purposes!
 ### Poke Agent
 Inspired by [allenthomas](https://allenthomas.vercel.app/posts/mcp) technical walkthrough to explain what and how MCP works in simple terms.
 
+
 ## Diagram
 
-Check out the [diagram](/diagram.md) for the visual explanation.
+Check out the [diagram](/docs/diagram.md) for the visual explanation.
