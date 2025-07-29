@@ -17,3 +17,6 @@ Inspired by [allenthomas](https://allenthomas.vercel.app/posts/mcp) technical wa
 ## Diagram
 
 Check out the [diagram](/docs/diagram.md) for the visual explanation.
+
+## Demo
+See the [demo](/docs/demo.md) for a quick overview of the tools in action.
