@@ -2,13 +2,13 @@ package apis
 
 import (
 	"fmt"
-	"strings"
 
 	"golang.org/x/text/cases"
 	"golang.org/x/text/language"
 )
 
 const pokeApiHost = "https://pokeapi.co/api/v2/"
+
 
 type PokemonDetails struct {
 	ID             int      `json:"id"`
@@ -20,7 +20,7 @@ type PokemonDetails struct {
 	Weight         int      `json:"weight"`
 }
 
-func GetPokemonDetails(pokemonNameOrID string) (PokemonDetails, error) {
+func GetPokeDetails(pokemonNameOrID string) (PokemonDetails, error) {
 	url := fmt.Sprintf("%spokemon/%s", pokeApiHost, pokemonNameOrID)
 	data, err := fetcher(url)
 	if err != nil {
@@ -29,7 +29,6 @@ func GetPokemonDetails(pokemonNameOrID string) (PokemonDetails, error) {
 
 	var caserTitle = cases.Title(language.Indonesian)
 
-	// Extract types
 	var types []string
 	if typesData, ok := data["types"].([]any); ok {
 		for _, t := range typesData {
@@ -43,14 +42,13 @@ func GetPokemonDetails(pokemonNameOrID string) (PokemonDetails, error) {
 		}
 	}
 
-	// Extract abilities
 	var abilities []string
 	if abilitiesData, ok := data["abilities"].([]any); ok {
 		for _, a := range abilitiesData {
 			if abilityMap, ok := a.(map[string]any); ok {
 				if abilityInfo, ok := abilityMap["ability"].(map[string]any); ok {
 					if name, ok := abilityInfo["name"].(string); ok {
-						abilities = append(abilities, caserTitle.String(strings.ReplaceAll(name, "-", " ")))
+						abilities = append(abilities, name)
 					}
 				}
 			}
@@ -70,7 +68,7 @@ func GetPokemonDetails(pokemonNameOrID string) (PokemonDetails, error) {
 	return result, nil
 }
 
-func GetAbilityDetails(abilityNameOrID string) (map[string]any, error) {
+func GetPokeAbilityDetails(abilityNameOrID string) (map[string]any, error) {
 	url := fmt.Sprintf("%sability/%s", pokeApiHost, abilityNameOrID)
 	data, err := fetcher(url)
 	if err != nil {

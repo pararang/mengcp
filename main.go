@@ -9,6 +9,7 @@ import (
 	"github.com/anthropics/anthropic-sdk-go"
 	"github.com/pararang/code-editing-agent/claude"
 	"github.com/pararang/code-editing-agent/tools"
+	pokeTools "github.com/pararang/code-editing-agent/tools/pokemon"
 )
 
 func main() {
@@ -28,6 +29,7 @@ func main() {
 		tools.ReadFileDefinition, 
 		tools.ListFilesDefinition,
 		tools.EditFileDefinition,
+		pokeTools.GetDetailDefinition,
 	)
 
 	err := claude.Run(context.TODO())
