@@ -1,10 +1,13 @@
 module github.com/pararang/emcp
 
-go 1.23.0
+go 1.23.2
+
+toolchain go1.23.11
 
 require (
 	github.com/anthropics/anthropic-sdk-go v1.6.2
 	github.com/invopop/jsonschema v0.13.0
+	github.com/joho/godotenv v1.5.1
 	github.com/stretchr/testify v1.8.4
 	golang.org/x/text v0.16.0
 )
