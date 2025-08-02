@@ -6,6 +6,7 @@ graph TD
     
     C -->|Code Editing| D[Code Editing Tools]
     C -->|Pokemon Info| E[Pokemon API Tools]
+    C -->|Finance Data| N[Finance API Tools]
     
     D --> F[Read File Tool]
     D --> G[List Files Tool]
@@ -14,6 +15,11 @@ graph TD
     
     E --> I[Get Pokemon Details]
     E --> J[Get Ability Details]
+
+    N --> O[Get Ticker Data]
+    O --> P[Yahoo Finance API]
+    P --> Q{Fallback?}
+    
     
     I --> K[PokeAPI]
     J --> K[PokeAPI]
@@ -25,7 +31,11 @@ graph TD
     
     K -->|Pokemon Data| M[JSON Response]
     M -->|Parsed Data| B
-    
+    Q --> |No| M
+    Q --> |Yes| R[EODHD API] --> M
+
+
+
     L -->|File Operations| B
     B -->|Response| A
 ```

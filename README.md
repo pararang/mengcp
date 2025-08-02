@@ -17,6 +17,9 @@ Feel free to explore and modify the code for your own purposes!
 ### Poke Agent
 Inspired by [allenthomas](https://allenthomas.vercel.app/posts/mcp) technical walkthrough to explain what and how MCP works in simple terms.
 
+### Finance Agent
+This agent is designed to fetch stock data from Yahoo Finance and EODHD for financial analysis. Inspired by [this micro cap experiment](https://github.com/LuckyOne7777/ChatGPT-Micro-Cap-Experiment).
+
 ## Development
 ### Prerequisites
 - Go 1.23 or later
@@ -30,10 +33,7 @@ Inspired by [allenthomas](https://allenthomas.vercel.app/posts/mcp) technical wa
 
 1. Clone the repository
 2. Install dependencies using `go mod tidy`
-3. Set your Anthropic API key in the environment variable `ANTHROPIC_API_KEY`
-   ```bash
-   export ANTHROPIC_API_KEY=your_api_key_here
-   ```
+3. Create `.env` file by copy the content from .env.example and adjust the value for each variable, especially `ANTHROPIC_API_KEY` with your own API key from [Anthropic](https://www.anthropic.com/). `EODHD_API_KEY` is optional, you can use it if you want to use EODHD as a fallback for Yahoo Finance.
 4. Run the application using `go run main.go`
    > Ensure you have the necessary permissions to run the application, especially if you're using a Mac
 
@@ -47,3 +47,4 @@ See the [demo](/docs/demo.md) for a quick overview of the tools in action.
 ## Todo
 - [ ] add tools for interacting with hosted actual budget
 - [ ] add tools for interacting with local logseq graph
+- [ ] trading analysis tools using historical data from Yahoo Finance and EODHD againts the current gotrade portfolio

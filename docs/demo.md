@@ -3,3 +3,10 @@
 | Before Implementation                       | After Implementation                      |
 | ------------------------------------------- | ----------------------------------------- |
 | ![before poke tools](/docs/before-poke.png) | ![after poke tools](/docs/after-poke.png) |
+
+## Finance Tool + File Ops Tools
+Get stock data from Yahoo Finance then save to CSV
+![type:video](/docs/nvidia-yfinance.mp4)
+
+Get stock data from EODHD (fallback if YFinance fails) then save to CSV
+![type:video](/docs/meta-eodhd.mp4)
