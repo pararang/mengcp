@@ -6,7 +6,10 @@
 
 ## Finance Tool + File Ops Tools
 Get stock data from Yahoo Finance then save to CSV
-![type:video](/docs/nvidia-yfinance.mp4)
+
+<video src="/docs/nvidia-yfinance.mp4" width="100%" controls></video>
+
 
 Get stock data from EODHD (fallback if YFinance fails) then save to CSV
-![type:video](/docs/meta-eodhd.mp4)
+
+<video src="/docs/meta-eodhd.mp4" width="100%" controls></video>
