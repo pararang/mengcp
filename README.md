@@ -48,3 +48,5 @@ See the [demo](/docs/demo.md) for a quick overview of the tools in action.
 - [ ] add tools for interacting with hosted actual budget
 - [ ] add tools for interacting with local logseq graph
 - [ ] trading analysis tools using historical data from Yahoo Finance and EODHD againts the current gotrade portfolio
+  - [ ] use tavily for investor sentiment scraping news
+  - [ ] store news as vector in vector database, milvus/qdrant/pgvector?
